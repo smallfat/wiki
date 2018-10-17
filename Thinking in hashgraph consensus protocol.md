@@ -8,9 +8,9 @@ grammar_cjkRuby: true
 - Gossip about gossip - hashgraph在gossip协议的基础上进行传播扩散。消息内容是gossip本身的历史
 - 可见 seeing - 区块x可见区块y意味着y是x的祖先区块
 - 强可见 strongly seeing - 区块x强可见区块y意味着y是x的祖先区块且x到y的路径跨过了2/3以上的节点
-- 轮次 round - 分为创建轮(create round)和接受轮(receive round)
-- 创建轮(create round) - 
-- 接受轮(receive round) - 
+- 轮次 round - 分为创建轮(created round)和接受轮(received round)
+- 创建轮(created round) - 假设一个区块的创建轮次是R或者R+1，其中R是该区块父节点的最大轮次。当且仅当区块能**强可见****绝对多数**的R轮见证人，则该区块的创建轮次为R+1。
+- 接受轮(received round) - 
 - 见证人 witness - 
 - 知名见证人 famous witness - 
 

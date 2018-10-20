@@ -18,12 +18,15 @@ grammar_cjkRuby: true
  - cornerstone of Byzantine Fault Tolerance 1 - 如果x和y是一个不合法fork的两个不同分支，则w最多只能强可见x和y中的一个。
  - cornerstone of Byzantine Fault Tolerance 2 - 如果hashgraph A和B是一致的(consistent)，则以下是不可能的：在A中x能被一个block强可见，在B中y也能被另外的block强可见
 
-## 共识算法
+## 算法
 
- 1. step 1 - Alice 随机选择一个成员Bob，gossip给他自己所知道的所有block的信息。Bob随后创建一个新的event去记录这些信息。
- 2. step 2 - 
- 3. step 3 - 
- 4. 
+ - 总体
+ 
+![](./images/Hashgraph-figure4.png)
+    
+        - 每个成员随机选择目标成员，并向目标成员发送同步数据。
+        - 在发送同步数据的同时，每个成员也接受同步数据。
+ - 
 
 ## 问题
 - 虚拟投票是指在单节点中依托全节点event数据（hash graph）完成全网的投票，而无需进行大量的网络通信。单节点中的全节点hash graph是怎么形成的呢？

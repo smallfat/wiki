@@ -27,7 +27,9 @@ grammar_cjkRuby: true
         - 每个成员随机选择目标成员，并向目标成员发送同步数据。
         - 在发送同步数据的同时，每个成员也接受同步数据。
         - Alice发送给Bob的数据，是Alice知道而Bob不知道的。
-        - Bob将这些数据（主要是blocks），加入到hashgraph中
+        - Bob只接受拥有合法签名blocks，然后将这些数据（主要是blocks），加入到hashgraph中
+        - 将所有已知的blocks划分轮次
+        - 
  - 
 
 ## 问题

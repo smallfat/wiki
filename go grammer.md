@@ -21,3 +21,5 @@ grammar_cjkRuby: true
 ## Object Oriented Programming
 
 ## type system
+
+## interface

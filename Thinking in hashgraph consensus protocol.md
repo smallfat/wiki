@@ -24,13 +24,24 @@ grammar_cjkRuby: true
  
 ![](./images/Hashgraph-figure4.png)
     
-        - 每个成员随机选择目标成员，并向目标成员发送同步数据。
-        - 在发送同步数据的同时，每个成员也接受同步数据。
-        - Alice发送给Bob的数据，是Alice知道而Bob不知道的。
-        - Bob只接受拥有合法签名blocks，然后将这些数据（主要是blocks），加入到hashgraph中
-        - 将所有已知的blocks划分轮次
-        - 
- - 
+     - 每个成员随机选择目标成员，并向目标成员发送同步数据。
+     - 在发送同步数据的同时，每个成员也接受同步数据。
+     - Alice发送给Bob的数据，是Alice知道而Bob不知道的。
+     - Bob只接受拥有合法签名blocks，然后将这些数据（主要是blocks），加入到hashgraph中
+     - 将所有已知的blocks划分轮次
+     
+ - 划分轮次
+
+![](./images/Figure5.png)
+
+ - decidefame
+
+![](./images/Figure6.png)
+
+ - 确定交易次序
+
+![](./images/Figure7.png)
+
 
 ## 问题
 - 虚拟投票是指在单节点中依托全节点event数据（hash graph）完成全网的投票，而无需进行大量的网络通信。单节点中的全节点hash graph是怎么形成的呢？

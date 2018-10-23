@@ -7,7 +7,8 @@ grammar_cjkRuby: true
 
 ## basic variable grammer
 #### variable definition
-
+- var count = 1
+- count := 1
 
 ## object creation and variable assignment
 - new方法: 创建一个指定type的对象，并将其全部初始化为0  conn := new(Connection)

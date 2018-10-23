@@ -9,6 +9,8 @@ grammar_cjkRuby: true
 #### variable definition
 
 
+## variable assignment
+
 
 ## channel
 
@@ -18,7 +20,7 @@ grammar_cjkRuby: true
 
 ## exception handler
 
-## Object Oriented Programming
+## Object Oriented Programming01.
 
 ## type system
 

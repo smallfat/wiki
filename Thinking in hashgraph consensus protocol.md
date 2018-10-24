@@ -34,14 +34,14 @@ grammar_cjkRuby: true
 
 ![](./images/Figure5.png)
 
- - decidefame
+ - 确定witness和famous witness
 
 ![](./images/Figure6.png)
 
  - 确定交易次序
 
 ![](./images/Figure7.png)
-
+- 普通block的条件：
 
 ## 问题
 - 虚拟投票是指在单节点中依托全节点event数据（hash graph）完成全网的投票，而无需进行大量的网络通信。单节点中的全节点hash graph是怎么形成的呢？

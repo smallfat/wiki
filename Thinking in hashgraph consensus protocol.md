@@ -13,6 +13,7 @@ grammar_cjkRuby: true
 - 接受轮(received round) - 第r轮（创建轮次）中所有的**知名见证者可见**的任何**普通区块**都会被赋予第r轮的接受轮次
 - 见证人 witness - 每个节点在每个轮次中创建的第一个事件就是见证人事件，即该轮次的祖先事件，节点可能在某个轮次中没有见证人事件
 - 知名见证人 famous witness - 如果第r轮的见证人区块能被绝对多数的第r+1轮的见证人可见，那么他就是知名见证人
+- 一致(consistent) - consistent means if there is event x in both hashgraph A and B, then the same parents of x both exists in A and B
 
 ## 理论
  - cornerstone of Byzantine Fault Tolerance 1 - 如果x和y是一个不合法fork的两个不同分支，则w最多只能强可见x和y中的一个。
@@ -42,6 +43,18 @@ grammar_cjkRuby: true
 
 ![](./images/Figure7.png)
 - 普通block的条件：
+
+## 定理与证明
+- 所有的成员节点有consistent hashgraph
+- 强可见定理 - if the pair of events(x,y) is a fork, and x is strongly seen by event z in hashgraph A, then y will not be strongly seen by any event in any hashgraph B that is consistent with A.
+-  If hashgraphs A and B are consistent and both contain event x, then both will assign the same round created number to x.
+-  If hashgraphs A and B are consistent, and the algorithm running on A shows for a given election that a round r witness by member m0 sends a vote vA to a witness created by member m1 in round r + 1, and the algorithm running on B shows that a round r witness by member m0 sends a vote vB to a witness by member m1 in round r + 1, then vA = vB.
+-  If hashgraphs A and B are consistent, and A decides a Byzantine agreement election with result v in round r and B has not decided prior to r, then B will decide v in round r + 2 or before
+-  If hashgraphs A and B are consistent, and A decides a Byzantine agreement election with result v in round r and B has not decided prior to r, then B will decide v in round r + 2 or before.
+-  For any single YES/NO question, consensus is achieved eventually with probability 1.
+-  For any round number r, for any hashgraph that has at least one event in round r+3, there will be at least one witness in round r that will be decided to be famous by the consensus algorithm, and this decision will be made by every witness in round r + 3, or earlier
+-  If hashgraph A does not contain event x, but does contain all the  parents of x, and hashgraph B is the result of adding x to A, and x is a witness created in round r, and A has at least one witness in round r whose fame has been decided (as either famous or as not famous), then x will be decided as “not famous” in B.
+-   (Byzantine Fault Tolerance Theorem). Each event x created by an honest member will eventually be assigned a consensus position in the total order of events, with probability 1.
 
 ## 问题
 - 虚拟投票是指在单节点中依托全节点event数据（hash graph）完成全网的投票，而无需进行大量的网络通信。单节点中的全节点hash graph是怎么形成的呢？

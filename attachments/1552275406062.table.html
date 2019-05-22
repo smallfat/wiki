@@ -1,0 +1,16 @@
+<table class='table table-celled table-component' border='1' style='border-collapse: collapse; width: 99.9471%;' id='tinymcetable' > <thead>
+<tr>
+<th style="width: 4.16079%; text-align: center;">seq</th>
+<th style="width: 35.7446%; text-align: center;">definition</th>
+<th style="width: 60.0417%; text-align: center;">functionality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="width: 4.16079%;">1</td>
+<td style="width: 35.7446%;">
+<pre>Init(<br /> ethNodeAddr string,<br /> keyServiceAddr string,<br /> protocolAddr string,<br /> tokenAddr string,<br /> fromBlock uint64,<br /> ipfsNodeAddr string,<br /> logPath string,<br /> appId string,<br />) error</pre>
+</td>
+<td style="width: 60.0417%;">在使用scryinfo协议层SDK之前，需要对整个SDK进行初始化。<br /><br />ethNodeAddr&nbsp; : 以太坊节点地址，由主办者提供<br />keyServiceAddr: 密钥服务地址，由主办者提供<br />protocolAddr&nbsp; &nbsp;: 协议智能合约的地址，由主办者提供<br />tokenAddr&nbsp; &nbsp; &nbsp;: token智能合约的地址，由主办者提供<br />fromBlock&nbsp; &nbsp; &nbsp;: event扫描的起始区块，默认为0，即从当前最新块开始扫描<br />ipfsNodeAddr&nbsp; : IPFS节点地址，由主办者提供<br />logPath&nbsp; &nbsp; &nbsp; &nbsp;: SDK日志存放全路径，包含文件名<br />appId&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: 应用程序ID。同一ID下的消息是互通的，每个参赛团队应该有全局唯一的appId。</td>
+</tr>
+</tbody> </table>

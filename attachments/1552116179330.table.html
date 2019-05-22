@@ -1,0 +1,58 @@
+<table class='table table-celled table-component' border='1' style='border-collapse: collapse; width: 99.9471%; height: 532px;' id='tinymcetable' > <thead>
+<tr style="height: 20px;">
+<th style="width: 4.47117%; text-align: center; height: 20px;">seq</th>
+<th style="width: 35.6682%; text-align: center; height: 20px;">definition</th>
+<th style="width: 59.8078%; text-align: center; height: 20px;">functionality</th>
+</tr>
+</thead>
+<tbody>
+<tr style="height: 89px;">
+<td style="width: 4.47117%; height: 89px;">1</td>
+<td style="width: 35.6682%; height: 89px;">
+<pre>Publish(<br />   txParams *op.TransactParams,<br />   price *big.Int,<br />   metaData []byte,<br />   proofDatas [][]byte,<br />   proofNum int,<br />   descriptionData []byte<br />) (string, error)</pre>
+</td>
+<td style="width: 59.8078%; height: 89px;">发布数据到IPFS上，并将IPFS返回的资源id保存到区块链合约中。<br /><br />该接口第一个返回值为publishId，类型为string。<br />txParams&nbsp; &nbsp; &nbsp; : 区块链交易参数。&nbsp;<br />price&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : 数据售价，单位为1 token<br />metaData&nbsp; &nbsp; &nbsp; : 待售数据<br />proofDatas&nbsp; &nbsp; &nbsp;: 数据证明片段，用来证明所发布的数据的真实性&nbsp;<br />proofNum&nbsp; &nbsp; &nbsp; :&nbsp;数据证明片段的数组大小&nbsp;<br />descriptionData : 数据描述，如title, keyword等。具体意义由应用层决定。<br /><br />当数据成功发布到IPFS和区块链上，链会发送DataPublish事件给所有用户。<br />DataPublish事件以Json格式定义，参见Event接口</td>
+</tr>
+<tr style="height: 146px;">
+<td style="width: 4.47117%; height: 154px;">2</td>
+<td style="width: 35.6682%; height: 154px;">
+<pre>ApproveTransfer(<br />   txParams *op.TransactParams,<br />   spender common.Address, <br />   value *big.Int<br />) (error)</pre>
+</td>
+<td style="width: 59.8078%; height: 154px;">准许地址spender从本接口调用方地址进行token转账，<br /><br />txParams&nbsp; &nbsp;: 区块链交易参数<br />spender&nbsp; &nbsp; : 被允许的转账发起地址<br />value&nbsp; &nbsp; &nbsp; : 被允许的转账额度,&nbsp;单位为1 token，要大于或等于想购买的数据价格<br /><br /><br />在这个过程中，链收到请求后，会发送Approval事件给调用方。参见Event接口。</td>
+</tr>
+<tr style="height: 20px;">
+<td style="width: 4.47117%; height: 20px;">3</td>
+<td style="width: 35.6682%; height: 20px;">
+<pre>PrepareToBuy(<br />   txParams *op.TransactParams,<br />   publishId string<br />) (error)</pre>
+</td>
+<td style="width: 59.8078%; height: 20px;">买方准备购买数据，希望得到待买数据的证明数据ID。<br />在调用本接口之前，买方需先调用ApproveTransfer接口，允许合约从买方地址转出押金。<br /><br />txParams&nbsp; &nbsp;: 区块链交易参数<br />publishId&nbsp; &nbsp;: 同上<br /><br />链收到请求后，会发送TransactionCreate事件给买方。<br />TransactionCreate事件以Json格式定义，参见Event接口。</td>
+</tr>
+<tr style="height: 20px;">
+<td style="width: 4.47117%; height: 20px;">4<br /><br /></td>
+<td style="width: 35.6682%; height: 20px;">
+<pre>BuyData(<br />   txParams *op.TransactParams,<br />   txId *big.Int<br />) (error)</pre>
+</td>
+<td style="width: 59.8078%; height: 20px;">买方正式购买数据。<br /><br />txParams&nbsp; &nbsp;: 区块链交易参数<br />txId&nbsp; &nbsp; &nbsp; &nbsp; : 本次交易ID，由TransactionCreate事件的transactionId字段取得。<br /><br />链收到请求后，会发送Buy事件给卖方。<br />Buy事件以Json格式定义，参见Event接口。</td>
+</tr>
+<tr style="height: 89px;">
+<td style="width: 4.47117%; height: 89px;">5</td>
+<td style="width: 35.6682%; height: 89px;">
+<pre>SubmitMetaDataIdEncWithBuyer(<br />   txParams *op.TransactParams,<br />   txId *big.Int,<br />   encyptedMetaDataId []byte<br />) (error)</pre>
+</td>
+<td style="width: 59.8078%; height: 89px;">卖方上传待卖数据的metaDataId到区块链上，该ID使用买方公钥加密。<br /><br />txParams&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : 区块链交易参数<br />txId&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: 本次交易ID，由Buy事件的transactionId字段取得<br />encyptedMetaDataId : 使用买方公钥加密的metaDataId<br /><br />链收到请求后，会发送ReadyForDownload事件给买方。<br />买方得到metaDataId并以私钥解密，得到真正的meta data ID，就可以从IPFS上下载数据了。<br />ReadyForDownload事件以Json格式定义，参见Event接口。</td>
+</tr>
+<tr style="height: 70px;">
+<td style="width: 4.47117%; height: 70px;">6</td>
+<td style="width: 35.6682%; height: 70px;">
+<pre>ConfirmDataTruth(<br />   txParams *op.TransactParams,<br />   txId *big.Int, <br />   truth bool<br />) (error)</pre>
+</td>
+<td style="width: 59.8078%; height: 70px;">买方确认数据真实性。<br /><br />txParams&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : 区块链交易参数<br />txId&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: 本次交易ID，由Buy事件的transactionId字段取得<br />truth&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : 数据是否真实<br /><br />链收到请求后，会发送TransactionClose事件给所有用户，并关闭交易。<br />若数据为真，合约会将买方押金支付给卖方。<br />TransactionClose事件以Json格式定义，参见Event接口。</td>
+</tr>
+<tr>
+<td style="width: 4.47117%;">7</td>
+<td style="width: 35.6682%;">
+<pre>Bytes32ToIpfsHash(<br />   value [32]byte<br />) (string, error)</pre>
+</td>
+<td style="width: 59.8078%;">工具函数，用来把bytes32转换为base58编码的IPFS Hash。<br /><br /><br /></td>
+</tr>
+</tbody> </table>

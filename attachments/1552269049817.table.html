@@ -1,0 +1,30 @@
+<table class='table table-celled table-component' border='1' style='border-collapse: collapse; width: 100.121%;' id='tinymcetable' > <thead>
+<tr>
+<th style="width: 2.99246%; text-align: center;">seq</th>
+<th style="width: 35.6258%; text-align: center;">definition</th>
+<th style="width: 61.5023%; text-align: center;">functionality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="width: 2.99246%;">1</td>
+<td style="width: 35.6258%;">
+<pre>Encrypt(<br />    plainText []byte, <br />    address string) <br />([]byte, error)</pre>
+</td>
+<td style="width: 61.5023%;">使用用户地址为address的公钥对明文plainText进行加密<br /><br />plainText: 明文数据&nbsp;<br />address : 用户地址</td>
+</tr>
+<tr>
+<td style="width: 2.99246%;">2</td>
+<td style="width: 35.6258%;">
+<pre>Decrypt(<br />    cipherText []byte,<br />    address string,<br />    password string)<br />([]byte, error)</pre>
+</td>
+<td style="width: 61.5023%;">使用用户地址为address的私钥对密文cipherText进行解密<br /><br />cipherText : 密文<br />address&nbsp; &nbsp;: 用户地址<br />password&nbsp; : 用户密码</td>
+</tr>
+<tr>
+<td style="width: 2.99246%;">3</td>
+<td style="width: 35.6258%;">
+<pre>ReEncrypt(<br />    cipherText []byte, <br />    address1 string,<br />   address2 string, <br />    password string) <br />([]byte, error)</pre>
+</td>
+<td style="width: 61.5023%;">对已加密数据cipherText进行解密，然后再使用第二个用户地址的公钥进行加密。<br /><br />cipherText: 密文数据&nbsp;<br />address1 : 解密用户地址<br />address2 : 加密用户地址<br />password:&nbsp; 解密用户密码</td>
+</tr>
+</tbody> </table>

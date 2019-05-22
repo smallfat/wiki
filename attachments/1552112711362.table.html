@@ -1,0 +1,39 @@
+<table class='table table-celled table-component' border='1' style='border-collapse: collapse; width: 99.7398%; height: 191px;' id='tinymcetable' > <thead>
+<tr style="height: 20px;">
+<th style="width: 2.99049%; height: 20px; text-align: center;">seq</th>
+<th style="width: 35.7319%; height: 20px; text-align: center;">definition</th>
+<th style="width: 61.0174%; height: 20px; text-align: center;">functionality</th>
+</tr>
+</thead>
+<tbody>
+<tr style="height: 20px;">
+<td style="width: 2.99049%; height: 20px;">1</td>
+<td style="width: 35.7319%; height: 20px;">
+<pre>NewScryClient(<br />   address string<br />) (*ScryClient)</pre>
+</td>
+<td style="width: 61.0174%; height: 20px;">创建一个ScryClient实例(如名为scryClient)<br />用户访问scryClient.Account.Address能够得到用户的账户地址。<br /><br />address: 待创建用户的地址</td>
+</tr>
+<tr style="height: 20px;">
+<td style="width: 2.99049%; height: 20px;">2</td>
+<td style="width: 35.7319%; height: 20px;">
+<pre>SubscribeEvent(<br />   eventName string, <br />   callback chainevents.EventCallback)</pre>
+</td>
+<td style="width: 61.0174%; height: 20px;">当前ScryClient通过调用此接口，可订购链上此用户的指定事件(event)。当event到来时，会触发指定的callback函数。可以订购的event类型有：<br />
+<pre>DataPublish<br />TransactionCreate<br />Buy<br />ReadyForDownload<br />TransactionClose<br />Approval</pre>
+</td>
+</tr>
+<tr style="height: 20px;">
+<td style="width: 2.99049%; height: 20px;">3</td>
+<td style="width: 35.7319%; height: 20px;">
+<pre>GetEth(<br />   owner common.Address<br />) (*big.Int, error)</pre>
+</td>
+<td style="width: 61.0174%; height: 20px;">获取账户地址为owner的ETH数额，单位为wei。<br /><br />owner: 账户地址</td>
+</tr>
+<tr style="height: 51px;">
+<td style="width: 2.99049%; height: 51px;">4</td>
+<td style="width: 35.7319%; height: 51px;">
+<pre>GetScryToken(<br />   owner common.Address<br />) (*big.Int, error)</pre>
+</td>
+<td style="width: 61.0174%; height: 51px;">获取账户地址为owner的Token数额，单位为1 token。<br /><br />owner: 账户地址</td>
+</tr>
+</tbody> </table>

@@ -1,0 +1,39 @@
+<table class='table table-celled table-component' border='1' style='border-collapse: collapse; width: 100.029%; height: 140px;' id='tinymcetable' > <thead>
+<tr style="height: 20px;">
+<th style="width: 1.92175%; height: 20px;">seq</th>
+<th style="width: 13.3911%; height: 20px;">event name</th>
+<th style="width: 84.7161%; height: 20px;">example</th>
+</tr>
+</thead>
+<tbody>
+<tr style="height: 20px;">
+<td style="width: 1.92175%; height: 20px;">1</td>
+<td style="width: 13.3911%; height: 20px;">DataPublish</td>
+<td style="width: 84.7161%; height: 20px;">{<br />"despDataId":"QmhKnroYBFp", //数据描述ID，依据此ID可从IPFS取得待售数据的描述<br />"price":1000,&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//待售数据价格<br />"publishId":"155212056",&nbsp; &nbsp; &nbsp; &nbsp;//本次发布的ID，与Publish()第一个返回值相同<br />"seqNo":"155212057",&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />"users":["0xxxx"]&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br />}</td>
+</tr>
+<tr style="height: 20px;">
+<td style="width: 1.92175%; height: 20px;">2</td>
+<td style="width: 13.3911%; height: 20px;">Approval</td>
+<td style="width: 84.7161%; height: 20px;">{<br />"owner":"0x3Ab0dAA324",&nbsp; &nbsp; &nbsp; //授权人<br />"spender":"0x3c4d26E91",&nbsp; &nbsp; &nbsp; //被授权人<br />"value":1600&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //已授权额度<br />}</td>
+</tr>
+<tr style="height: 20px;">
+<td style="width: 1.92175%; height: 20px;">3</td>
+<td style="width: 13.3911%; height: 20px;">TransactionCreate</td>
+<td style="width: 84.7161%; height: 20px;">{&nbsp;<br />"proofIds":[[211,159],[170,49]],&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//证明数据ID<br />"publishId":"1552121",&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //数据发布ID<br />"seqNo":"15521219",<br />"transactionId":4,&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //本次交易ID<br />"users":["0xxxx"]<br />}</td>
+</tr>
+<tr style="height: 20px;">
+<td style="width: 1.92175%; height: 20px;">4</td>
+<td style="width: 13.3911%; height: 20px;">Buy</td>
+<td style="width: 84.7161%; height: 20px;">{<br />"metaDataIdEncSeller":"SdWeISqpSyhGA==",&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //使用卖方公钥加密的元数据ID<br />"publishId":"1552121827295982593-913139",&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//数据发布ID<br />"seqNo":"1552121924035218179-67679122",<br />"transactionId":4,&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//本次交易ID<br />"buyer","0x3Ab0dAA324"&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //买方地址<br />"users":["0xxxx"]<br />}</td>
+</tr>
+<tr style="height: 20px;">
+<td style="width: 1.92175%; height: 20px;">5</td>
+<td style="width: 13.3911%; height: 20px;">ReadyForDownload</td>
+<td style="width: 84.7161%; height: 20px;">{<br />"metaDataIdEncBuyer":"tql/mAZY/z0aR2g==",&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//使用买方公钥加密的元数据ID<br />"seqNo":"1552126832692923243-89400636",<br />"transactionId":4,&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //本次交易ID<br />"users":["0xxxx"]<br />}</td>
+</tr>
+<tr style="height: 20px;">
+<td style="width: 1.92175%; height: 20px;">6</td>
+<td style="width: 13.3911%; height: 20px;">TransactionClose</td>
+<td style="width: 84.7161%; height: 20px;">{<br />"seqNo":"1552126873209063970-5512851552272651527",<br />"transactionId":4,&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//本次交易ID<br />"users":["0xxxx"]<br />}</td>
+</tr>
+</tbody> </table>

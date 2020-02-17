@@ -8,21 +8,31 @@ grammar_cjkRuby: true
 要构造IPFS协议为基础的分布式存储网络，需要大量节点加入。可天下毕竟没有免费的午餐，要壮大这个网络，引入激励层势在必行。这就引出了Filecoin的诞生。
 Filecoin最早的一个实现是go-filecoin项目，原来预计的第一阶段测试网将基于这个实现。熟悉协议实验室的都知道他们的风格，go-filecoin毫无悬念的跳票了，lotus项目就在这样的背景下诞生了。
 
-#### 项目共识
-上一节也说过，Filecoin是IPFS的激励层。如果Filecoin满足激励有效、存储安全、体验优秀等特点，可以预计将会有许多资本会进入这个项目，Filecoin将会成为一个具有成熟商业模型的项目。Filecoin项目的总体架构也需要围绕这些目标进行设计。在分析lotus的架构时，我们需要凝聚一下项目的共识。
+#### 项目
+上一节也说过，Filecoin是IPFS的激励层。如果Filecoin满足激励有效、存储安全、体验优秀等特点，可以预计将会有许多资本会进入这个项目，Filecoin将会成为一个具有成熟商业模式的项目。Filecoin项目的总体架构也需要围绕这些目标进行设计。
 
-![enter description here](./images/Screenshot_from_2020-02-15_23-16-21.png)
-###### 角色
-- chain
-- block miner
-- storage miner
-- storage client
+
+在开始探讨具体的技术问题之前，有几个关键问题我们要搞清楚：
+- high-level 业务流
+- 怎么达到激励的目的
+- 如何保证存储的安全性
+- 激励的公平性如何保证
+
+
 ###### high level业务流
+![enter description here](./images/Screenshot_from_2020-02-15_23-16-21.png)
 
+###### 怎么达到激励的目的
+俗话说，无利不起早。要让资本进入这个项目，得让资金有所回报。Filecoin项目的数字货币为FIL，按照白皮书，70%的FIL会奖励给参与这个项目的矿工，其中包括区块挖掘奖励和数据储存奖励等。
 
-#### 链
-![enter description here](./images/Screenshot_from_2020-02-14_23-00-26.png)
+###### 如何保证存储的安全性
+- 区块挖掘的安全性
+	所有参与挖矿的节点都会参与被称为Expected Consensus的链共识，运行Secure Leader Election，被选举出的Leader(们)都有权创建新的block，并加入当前高度的tipset。 
+	EC共识采用VRF生成随机数，采用PoSt算法生成可验证的区块证明，并在之后的链周期进行验证，来解决block mining中的安全风险。
+	
+- 数据存储的安全性
+  当storage miner通知storage client说已经成功存储完数据，storage client怎么知道对方真实的存储了数据呢？系统采用了几个方法
+  - 
 
+###### 激励的公平性如何保证
 
-
-#### 存储

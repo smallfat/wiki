@@ -18,7 +18,7 @@ Filecoin最早的一个实现是go-filecoin项目，原来预计的第一阶段�
 - 如何保证存储的安全性
 
 ###### high level业务流
-![enter description here](./images/Screenshot_from_2020-02-15_23-16-21.png)
+![](./images/Screenshot_from_2020-02-15_23-16-21.png)
 如上图所示，系统中参与者有storage client、storage miner、block miner、chain等角色。
 在chain的每个epoch，block miner们会参与Secure Leader Election，选举完成以后，winner们就可以把发送过来的各种messages，包括storage request message进行打包成为block并执行，新的block随后被同步到网络上的其他节点。storage miner收到storage request以后，进行存储，并生成PoSt存储证明。
 

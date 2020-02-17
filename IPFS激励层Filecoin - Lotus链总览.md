@@ -16,11 +16,11 @@ Filecoin最早的一个实现是go-filecoin项目，原来预计的第一阶段�
 - high-level 业务流
 - 怎么达到激励的目的
 - 如何保证存储的安全性
-- 激励的公平性如何保证
-
 
 ###### high level业务流
 ![enter description here](./images/Screenshot_from_2020-02-15_23-16-21.png)
+如上图所示，系统中参与者有storage client、storage miner、block miner、chain等角色。
+在chain的每个epoch，block miner们会参与Secure Leader Election，选举完成以后，winner们就可以把发送过来的各种messages，包括storage request message进行打包成为block并执行，新的block随后被同步到网络上的其他节点。storage miner收到storage request以后，进行存储，并生成PoSt存储证明。
 
 ###### 怎么达到激励的目的
 俗话说，无利不起早。要让资本进入这个项目，得让资金有所回报。Filecoin项目的数字货币为FIL，按照白皮书，70%的FIL会奖励给参与这个项目的矿工，其中包括区块挖掘奖励和数据储存奖励等。
@@ -32,7 +32,8 @@ Filecoin最早的一个实现是go-filecoin项目，原来预计的第一阶段�
 	
 - 数据存储的安全性
   当storage miner通知storage client说已经成功存储完数据，storage client怎么知道对方真实的存储了数据呢？系统采用了几个方法
-  - 
+  - 在存储数据完成以后，storage miner需要使用PoSt生成数据已经存储的证明。
+  - 在存储完成之后的数个周期内，需要一直对此次存储进行证明。只有经过证明的存储，才可以拿到相应部分的存储挖矿奖励。
 
-###### 激励的公平性如何保证
-
+#### 结语
+这篇文章对Lotus做了一个介绍，对于整个系统的通用架构语言有一些了解。这样，在下面介绍和讨论具体技术的时候，可以更好的沟通。

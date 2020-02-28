@@ -62,11 +62,11 @@ challengeTicket = finalizeTicket(PartialTicket)
 def finalizeTicket(partialTicket):
     return Hash(partialTicket)
 ```
-由此可知，Challenge Ticket也可以认为是一个随机数，不可预测，在整个Hash空间是均匀分布的。
+由此可知，Challenge Ticket也可以认为是一个随机数，不可预测。Hash算法需要保证其值在整个Hash值域是均匀分布的。
 
 ##### 进行选举
 - 理论基础
-
+由于Challenge Ticket的均匀分布特性，那么只要将其进行归一化(Normalization)后，与一个阈值target进行大小比较，若小于target值，则选举成功。target就是选举获胜概率。
 
 - 
 ```

@@ -1,5 +1,5 @@
 ---
-title: Lotus链 - block mining consensus : Expected Consensus
+title: Lotus链 - Expected Consensus(期望共识协议) 一
 tags: 
 grammar_cjkRuby: true
 ---
@@ -66,9 +66,21 @@ def finalizeTicket(partialTicket):
 
 ##### 进行选举
 - 理论基础
-由于Challenge Ticket的均匀分布特性，那么只要将其进行归一化(Normalization)后，与一个阈值target进行大小比较，若小于target值，则选举成功。target就是选举获胜概率。
+由于Challenge Ticket的均匀分布特性，那么只要将其进行归一化(Normalization)为(0,1)值区间后，与一个阈值Target进行大小比较，若小于Target值，则选举成功。Target就是选举获胜概率。如下公式所示：
+```
+const MaxChallengeTicketSize = 2^len(Hash)
+ChallengeTicket/MaxChallengeTicketSize < Target
+```
+而选举获胜概率是由miner的有效存储值与整个网络有效存储值的比值决定的。公式演变为：
+```
+const MaxChallengeTicketSize = 2^len(Hash)
+ChallengeTicket/MaxChallengeTicketSize < ActivePowerInSector/NetworkPower
 
-- 
+*ActivePowerInSector: 扇区有效存储量
+*NetworkPower：       网络总有效存储量
+```
+
+- 伪代码
 ```
 winningTickets = []
 def checkTicketForWinners(partialTickets):
@@ -81,7 +93,9 @@ const maxChallengeTicketSize = 2^len(Hash)
 
 def TicketIsWinner(challengeTicket):
     // Check that `ChallengeTicket < Target`
-    return challengeTicket * networkPower * numSectorsSampled < activePowerInSector * maxChallengeTicketSize * numSectorsMiner			
+    return ChallengeTicket * NetworkPower < ActivePowerInSector * MaxChallengeTicketSize
 ```
 
-### 选举验证
+由于计算效率的关系，EC共识协议的实现做了一些优化，在以后的文章中会谈到。
+
+##### 生成选举证明

@@ -16,14 +16,13 @@ Leader选举必须是秘密、公正、可验证的。
 
 随机数被用在选举过程中，以确保其秘密性。在Lotus链中，存在一个独立的ticket链，这些tickets正是被用作随机数产生器的输入。
 
-选举，首先需要产生候选人，然后从候选人中选出获胜者。选举完成后，在随后的轮次中，还需要持续的验证此次选举的正确性。这个过程被称为ElectionPoSt，即选举时空证明。
-
-选举时空证明，用来证明这次选举过程是公正的。公正是指：
+选举，首先需要产生候选人，然后从候选人中选出获胜者。选举完成后，在随后的轮次中，还需要持续的验证此次选举的正确性，这正是选举的可验证性。这个过程被称为ElectionPoSt，即选举时空证明。
+选举的公正性是指：
 - 按照某miner的有效存储数与总网络存储数的比例作为获胜概率来进行选举
-  这就决定了有效sector中的内容必须被纳入到选举参数的计算中
+  这决定了有效sector中的内容必须被纳入到选举的计算中
 
 - 对单个节点而言，这次选举是针对该节点上的miner而进行的
-  因此miner的id应该也要纳入到选举参数的计算中 
+  因此miner的id应该也要纳入到选举的计算中 
 
 Lotus链进行选举的流程主要包括：
 - 产生随机数
@@ -31,7 +30,7 @@ Lotus链进行选举的流程主要包括：
 - 生成Challenge Tickets
 - 进行选举
 
-下面分别进行说明。
+选举流程保证了秘密、公正和可验证性。下面分别进行说明。
 
 ##### 产生随机数
 在当前轮次，随机数的生成公式如下：
@@ -66,7 +65,7 @@ def finalizeTicket(partialTicket):
 由此可知，Challenge Ticket也可以认为是一个随机数，不可预测，在整个Hash空间是均匀分布的。
 
 ##### 进行选举
-- 选举理论基础
+- 理论基础
 
 
 - 
@@ -82,7 +81,7 @@ const maxChallengeTicketSize = 2^len(Hash)
 
 def TicketIsWinner(challengeTicket):
     // Check that `ChallengeTicket < Target`
-    return challengeTicket * networkPower * numSectorsSampled < activePowerInSector * EC.ExpectedLeadersPerEpoch * maxChallengeTicketSize * numSectorsMiner			
+    return challengeTicket * networkPower * numSectorsSampled < activePowerInSector * maxChallengeTicketSize * numSectorsMiner			
 ```
 
 ### 选举验证

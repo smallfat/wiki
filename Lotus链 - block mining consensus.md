@@ -12,45 +12,77 @@ Lotus链是IPFS的激励层，主要作用是有效激励用户投入资源进�
 EC共识是基于概率的拜占庭容错协议。每一轮会运行领导人选举，理想的情况下，有一名或一名以上候选人会赢得选举，从而获得出块的权利；在不理想的情况下，可能没有候选人赢得选举。赢家们会基于随机数计算选举的证明数据。在随后的轮次中，选举证明数据将会被验证。
 
 ### leader选举
-Leader选举必须是秘密、公正、可验证的，系统使用随机数来确保这几个原则。在Lotus链中，存在一个独立的ticket链，这些tickets正是被用作随机数产生器的输入。
-###### 随机数产生
-The source of truth is defined below, but the currently defined DSTs are:
+Leader选举必须是秘密、公正、可验证的。
+
+随机数被用在选举过程中，以确保其秘密性。在Lotus链中，存在一个独立的ticket链，这些tickets正是被用作随机数产生器的输入。
+
+选举，首先需要产生候选人，然后从候选人中选出获胜者。选举完成后，在随后的轮次中，还需要持续的验证此次选举的正确性。这个过程被称为ElectionPoSt，即选举时空证明。
+
+选举时空证明，用来证明这次选举过程是公正的。公正是指：
+- 按照某miner的有效存储数与总网络存储数的比例作为获胜概率来进行选举
+  这就决定了有效sector中的内容必须被纳入到选举参数的计算中
+
+- 对单个节点而言，这次选举是针对该节点上的miner而进行的
+  因此miner的id应该也要纳入到选举参数的计算中 
+
+Lotus链进行选举的流程主要包括：
+- 产生随机数
+- 生成Partial Tickets
+- 生成Challenge Tickets
+- 进行选举
+
+下面分别进行说明。
+
+##### 产生随机数
+在当前轮次，随机数的生成公式如下：
 ```
-for drawing randomness from an on-chain ticket:
-TicketDrawingDST = 1
-
-for generating a new random ticket:
-TicketProductionDST = 2
-
-for generating randomness for running ElectionPoSt:
-ElectionPoStChallengeSeedDST = 3
-
-for generating randomness for running SurprisePoSt:
-SurprisePoStChallengeSeedDST = 4
-
-for selection of which miners to surprise:
-SurprisePoStSelectMinersDST = 5
-
-for selection of which sectors to sample:
-SurprisePoStSampleSectors = 6
+post_randomness = VRF(minerID + currentBlockHeight + ChainRandomness(currentBlockHeight - SPC_LOOKBACK_POST))
 ```
-For a given ticket's randomness ticket_randomness:
+由公式可以看出
+- 随机数种子 - 当前轮次之前SPC_LOOKBACK_POST轮的随机数，叠加minerID，再叠加当前轮次高度
+- 使用VRF（可验证随机函数）来生成随机数，具体使用的算法由VRF的实现决定
+
+##### 生成Partial Tickets
+1. miner需要从他的有效存储sectors中随机选择numSectorsSampled个合格的sector，用作样本sector。
+2. 将每一个sample sector的内容划分为n个固定大小的数据块，编号为B_1 ~ B_n。从这n个数据块中，随机选出k个数据块(k<n)，数据块的内容分别记为C_1_Output ~ C_k_Output。
+3. 针对每一个sample sector，Miner使用如下函数生成PartialTicket：
 ```
-buffer = Bytes{}
-buffer.append(IntToBigEndianBytes(AppropriateDST))
-buffer.append(-1) // a flag to be used in cases where FIL might need longer randomness outputs. Currently unused
-buffer.append(ticket_randomness)
-buffer.append(other needed serialized inputs)
+PartialTicket = Hash(post_randomness || minerID || C_1_Output || … || C_k_Output)
+```
+由函数可以看出，之前步骤生成的随机数post_randomness，miner id，数据块内容C_x_Output都作为参数连接到一起，然后做hash操作，生成Partial Ticket
+由于随机数的存在，可以认为，Partial Ticket的值也是一个随机数
 
-randomness = SHA256(buffer)
+4. 对每一个sample sector做类似操作，最后一共生成numSectorsSampled个Partial Ticket
+
+##### 生成Challenge Tickets
+
+Challenge Ticket的计算方法如下：
+```
+challengeTicket = finalizeTicket(PartialTicket) 
+
+def finalizeTicket(partialTicket):
+    return Hash(partialTicket)
+```
+由此可知，Challenge Ticket也可以认为是一个随机数，不可预测，在整个Hash空间是均匀分布的。
+
+##### 进行选举
+- 选举理论基础
+
+
+- 
+```
+winningTickets = []
+def checkTicketForWinners(partialTickets):
+    for partialTicket in partialTickets:
+        challengeTicket = finalizeTicket(PartialTicket) 
+        if TicketIsWinner(challengeTicket):
+            winningTickets += partialTicket
+			
+const maxChallengeTicketSize = 2^len(Hash)
+
+def TicketIsWinner(challengeTicket):
+    // Check that `ChallengeTicket < Target`
+    return challengeTicket * networkPower * numSectorsSampled < activePowerInSector * EC.ExpectedLeadersPerEpoch * maxChallengeTicketSize * numSectorsMiner			
 ```
 
-###### 进行选举
-
-
-### 选举证明
-###### PoSt
-###### VRF
-###### zkSNARK
-
-### 共识实现
+### 选举验证

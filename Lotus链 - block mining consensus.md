@@ -35,10 +35,10 @@ Lotus链进行选举的流程主要包括：
 ##### 产生随机数
 在当前轮次，随机数的生成公式如下：
 ```
-post_randomness = VRF(minerID + currentBlockHeight + ChainRandomness(currentBlockHeight - SPC_LOOKBACK_POST))
+post_randomness = VRF(minerID || currentBlockHeight || ChainRandomness(currentBlockHeight - SPC_LOOKBACK_POST))
 ```
 由公式可以看出
-- 随机数种子 - 当前轮次之前SPC_LOOKBACK_POST轮的随机数，叠加minerID，再叠加当前轮次高度
+- 随机数种子 - 当前轮次前SPC_LOOKBACK_POST轮的随机数，叠加minerID，再叠加当前轮次高度
 - 使用VRF（可验证随机函数）来生成随机数，具体使用的算法由VRF的实现决定
 
 ##### 生成Partial Tickets
@@ -98,4 +98,5 @@ def TicketIsWinner(challengeTicket):
 
 由于计算效率的关系，EC共识协议的实现做了一些优化，在以后的文章中会谈到。
 
-##### 生成选举证明
+# 结语
+EC共识利用概率计算实现了无交互式的Leader选举，实现了同时产生多个块的DAG链结构，有效地提高了链的出块效率，扩展了链容量。

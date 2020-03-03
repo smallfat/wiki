@@ -18,7 +18,7 @@ grammar_cjkRuby: true
 
 ### 个人特点
 - 熟悉linux及C++，有丰富的后台开发经验，熟悉分布式系统原理
-- 熟悉ethereum以太坊原理, Filecoin链原理，熟悉PoW, EC等区块链共识机制，熟悉Kad p2p网络
+- 熟悉ethereum以太坊原理, Filecoin链原理，熟悉PoW, EC等区块链共识机制，熟悉Kad等p2p网络原理
 - 熟悉tcp/ip异步网络编程模型，对libevent等网络框架有过源码级的研究
 - 良好的软件工程素养：熟悉agile scrum/Git/Gerrit；良好的软件质量意识
 - 熟悉golang

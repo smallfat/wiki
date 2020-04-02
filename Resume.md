@@ -18,7 +18,9 @@ grammar_cjkRuby: true
 
 ### 个人特点
 - 熟悉linux及C++，有丰富的后台开发经验，熟悉分布式系统原理
-- 熟悉ethereum以太坊原理, Filecoin链原理，熟悉PoW, EC等区块链共识机制，熟悉Kad等p2p网络原理
+- 熟悉ethereum以太坊区块链原理, Filecoin区块链原理
+- 熟悉PoW, Expected Consensus等区块链共识机制，熟悉Kademlia等p2p网络原理
+- 熟悉零知识证明(zkSNARK)等密码算法
 - 熟悉tcp/ip异步网络编程模型，对libevent等网络框架有过源码级的研究
 - 良好的软件工程素养：熟悉agile scrum/Git/Gerrit；良好的软件质量意识
 - 熟悉golang
@@ -29,15 +31,16 @@ grammar_cjkRuby: true
 
 ### 工作项目经历
 **ScryInfo无域基金会(新加坡)** (2018年9月 ~ 2020年1月)
-任职：项目技术负责人
+任职：项目架构师
 
-项目：区块链协议层  [开源地址](https://github.com/scryinfo/dp)
+项目：区块链协议层  [项目开源地址](https://github.com/scryinfo/dp)
 无域区块链协议层，是在区块链中对真实世界的数据进行存储、验证、使用、分享和交易平台。
 系统SDK模块采用golang，后端智能合约采用solidity。
 我作为项目技术负责人，主导架构设计，项目开发
 
-项目：Filecoin链矿池系统
-Filecoin链是IPFS的区块链激励层。本人作为核心研发人员，通过阅读源码，深入研究系统共识机制、PoSt时空证明、同步机制、p2p网络等核心组件，设计开发Lotus矿池，并修改优化Lotus源码，提升矿池挖矿效率，维护矿池数字资产安全。
+项目：Filecoin链优化
+Filecoin链是IPFS的区块链激励层。
+本人作为核心研发人员，通过阅读源码，深入研究系统共识机制、PoSt时空证明、同步机制、p2p网络等核心组件，设计开发Filecoin矿池，并修改优化Filecoin源码，提升矿池挖矿效率。
 
 **NOKIA(成都)有限公司** (2015年2月 ~ 2018年9月)
 作为一个全球性的IT外企，软件的质量是整个Nokia战略中极端重要的一环。NOKIA对产品质量要求苛刻，有着完善的质量制度，如UT覆盖率，TA通过率，CI/CD，正式的code review流程，专业的Neve测试/Pet测试/HAT测试，正规的scrum agile流程等。

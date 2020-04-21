@@ -16,6 +16,7 @@ grammar_cjkRuby: true
 - 手机：13568907802
 - Email：hq.liu@qq.com
 - Blog: https://smallfat.github.io/
+- Github: https://github.com/smallfat
 
 ### 个人特点
 - 熟悉linux及C++，有丰富的后台开发经验，熟悉分布式系统原理

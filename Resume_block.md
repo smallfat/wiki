@@ -19,10 +19,10 @@ grammar_cjkRuby: true
 - Blog: https://smallfat.github.io/
 
 ### 个人特点
-- 有在linux使用C++进行后台开发的丰富经验，熟悉分布式系统原理
+- 有在linux使用C++进行后台开发的丰富经验，了解分布式系统原理
 - 有区块链实际开发经验，熟悉Ethereum以太坊区块链原理, Filecoin区块链原理
 - 熟悉PoW, PBFT，Expected Consensus等区块链共识机制，熟悉Kademlia等p2p网络原理
-- 熟悉零知识证明(zkSNARK)等密码算法
+- 了解零知识证明(zkSNARK)等密码算法
 - 熟悉tcp/ip socket异步网络编程模型，对libevent等网络框架有过源码级的研究
 - 良好的软件工程素养：熟悉agile scrum/Git/Gerrit；良好的软件质量意识
 - 了解K8s，docker
@@ -37,7 +37,7 @@ grammar_cjkRuby: true
 无域区块链数据协议，是在区块链中对真实世界的数据进行存储、验证、使用、分享和交易的平台。
 协议设计上，采用多验证员投票方式对数据真实性进行验证；在实现中，系统SDK模块采用golang，后端智能合约采用solidity。
 
-我作为项目技术负责人，主导架构设计，项目开发，
+我作为项目技术负责人，主导架构设计，项目开发
 
 **NOKIA(成都)有限公司** (2015年2月 ~ 2018年9月)
 作为一个全球性的IT外企，软件的质量是整个Nokia战略中极端重要的一环。NOKIA对产品质量要求苛刻，有着完善的质量制度，如UT覆盖率，TA通过率，CI/CD，正式的code review流程，专业的Neve测试/Pet测试/HAT测试，正规的scrum agile流程等。

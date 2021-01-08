@@ -237,10 +237,3 @@ void * Allocator<clear_memory_, mmap_populate>::realloc(void * buf, size_t old_s
 ### 其他信息
 - 在上述编译系统中，若用到了git账户作为自动更新用途，统一使用的是jasonliu/AAAAAAAA
 
-# Prestudy - windows支持自动获取时区
-- 以下是我的一些实现调研，仅供参考
-```
-
-```
-
-# Feature - 支持1970年之前的日期

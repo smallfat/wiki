@@ -221,10 +221,11 @@ void * Allocator<clear_memory_, mmap_populate>::realloc(void * buf, size_t old_s
 
 ### freebsd
 - 编译方式：freebsd虚拟机上进行编译，需要用下述目录处的虚拟机文件创建一个virtualbox freebsd虚拟机，然后在虚拟机内进行编译
-- 虚拟机文件地址：root@192.168.1.144:/home/vooltdb_package/freebsd/freebsd.vhd
-- 编译环境地址：
-- 编译脚本地址：
-- 取包地址：
+- 虚拟机文件地址：root@192.168.1.144:/home/vooltdb_package/freebsd/FreeBSD-12.0-RELEASE-amd64.vhd
+- freebsd虚拟机账户：root/passwd
+- 编译环境地址：/root/vooltdb_build/build
+- 编译脚本地址：/root/vooltdb_build/build/build.sh
+- 取包地址：/root/vooltdb_build/build/programs/clickhouse
 - 注意：代码中把v8的部分都注释了，这部分需要v8编译对应OS的静态库，否则会报链接错误；因而脚本中也没有加入自动更新代码的部分
 
 ### windows
@@ -232,5 +233,14 @@ void * Allocator<clear_memory_, mmap_populate>::realloc(void * buf, size_t old_s
 - 编译环境地址：192.168.0.141:E:\vooltdb_win_build\
 - 编译脚本地址：192.168.0.141:E:\vooltdb_win_build\build\build.bat
 - 取包地址：192.168.0.141:E:\vooltdb_win_build\build\package\vooltdb.exe
+
+### 其他信息
+- 在上述编译系统中，若用到了git账户作为自动更新用途，统一使用的是jasonliu/AAAAAAAA
+
+# Prestudy - windows支持自动获取时区
+- 以下是我的一些实现调研，仅供参考
+```
+
+```
 
 # Feature - 支持1970年之前的日期

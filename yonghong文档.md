@@ -10,7 +10,7 @@ grammar_cjkRuby: true
 - 推荐使用msys2安装MINGW64, 可以使用pacman安装gcc工具链
 - gcc工具链版本: 对应当前vooltdb版本，要求是gcc9。可以从pacman历史版本库中找到安装包
 - gdb版本: 与gcc版本相同，要注意clion2020.1最高支持gdb 8，因此clion内无法使用gdb进行调试（不稳定）。需要在mingw终端使用gdb进行调试。使用gdb9以上高版本的clion应该可以在IDE内进行调试
-- 安装完mingw和pacman后，需要在pacman内安装openssl等库，这些库在编译的过程中会用到
+- 安装完mingw和pacman后，需要在pacman内安装libopenssl/libsystree等库，这些库在编译的过程中会用到
 
 ### 移植中碰到的问题
 ##### 第三方库编译
@@ -23,7 +23,7 @@ grammar_cjkRuby: true
 - 现象 - GatherUtils模块的特点是大部分都是template代码，其特点是具现化后，会生成大量代码。
 - 这中间has.cpp是最有代表性的一个编译单元。无论以什么优化级别编译has.cpp，都会生成巨量的section（100000+），且section name很长（最长name大约1K），导致.obj文件section区超长。
 - 解决办法 - 首先生成汇编代码has.cpp.s，修改其中section name为短格式，如此sections虽然多，但是不会超长，然后再生成has.cpp.obj。
-- 修改.s汇编代码的小工具是我用golang写的convert-asm，放在vooltdb_win/cmake/tool目录下
+- 修改.s汇编代码的小工具是我用golang写的convert-asm，源码与可执行文件均放在vooltdb_win/cmake/tool目录下
 - 因为上述修改属于hack，因此需要一个独立编译脚本。此脚本位于src/Function/GatherUtils/cmake_has/has_lib.cmake。
 ```
 add_custom_target(has_lib
@@ -195,15 +195,15 @@ void * Allocator<clear_memory_, mmap_populate>::realloc(void * buf, size_t old_s
 ```
 
 
-## 当前所有OS编译环境的情况
-#### linux
+# 当前所有OS编译环境的情况
+### linux
 - 编译方式：直接编译
 - 编译环境地址：root@192.168.1.144:/home/vooltdb_package/linux
 - 编译脚本地址：root@192.168.1.144:/home/vooltdb_package/linux/auto_tool/pkg.sh
 - 上述脚本加入了cronjob，设为每天零时执行
 - 取包地址：root@192.168.1.144:/home/vooltdb_package/linux/code/build_vd_minirel/programs/vooltdb
 
-#### macos
+### macos
 - 编译方式：交叉编译
 - 编译环境地址：root@192.168.1.144:/home/vooltdb_package/macos
 - 编译脚本地址：root@192.168.1.144:/home/vooltdb_package/macos/build/scripts/build.sh
@@ -211,12 +211,26 @@ void * Allocator<clear_memory_, mmap_populate>::realloc(void * buf, size_t old_s
 - macos SDK和compiling tools地址:root@192.168.1.144:/home/vooltdb_package/macos/tools
 - 注意：代码中把v8的部分都注释了，这部分需要v8编译对应OS的静态库，否则会报链接错误；因而脚本中也没有加入自动更新代码的部分
 
-#### aarch
+### aarch
 - 编译方式：交叉编译
-- 编译环境地址：root@192.168.1.144:/home/vooltdb_package/macos
-- 编译脚本地址：root@192.168.1.144:/home/vooltdb_package/macos/build/scripts/build.sh
-- 取包地址：root@192.168.1.144:/home/vooltdb_package/macos/build/scripts/build/programs/clickhouse
-- 注意：代码中把v8的部分都注释了，这部分需要v8编译对应OS的静态库；因而脚本中也没有加入自动更新代码的部分
+- 编译环境地址：root@192.168.1.144:/home/vooltdb_package/aarch
+- 编译脚本地址：root@192.168.1.144:/home/vooltdb_package/aarch/build/scripts/build.sh
+- 取包地址：root@192.168.1.144:/home/vooltdb_package/aarch/build/scripts/build/programs/clickhouse
+- aarch SDK和compiling tools地址:root@192.168.1.144:/home/vooltdb_package/aarch/tools/arm-sdk/
+- 注意：代码中把v8的部分都注释了，这部分需要v8编译对应OS的静态库，否则会报链接错误；因而脚本中也没有加入自动更新代码的部分
 
-#### freebsd
-#### windows
+### freebsd
+- 编译方式：freebsd虚拟机上进行编译，需要用下述目录处的虚拟机文件创建一个virtualbox freebsd虚拟机，然后在虚拟机内进行编译
+- 虚拟机文件地址：root@192.168.1.144:/home/vooltdb_package/freebsd/freebsd.vhd
+- 编译环境地址：
+- 编译脚本地址：
+- 取包地址：
+- 注意：代码中把v8的部分都注释了，这部分需要v8编译对应OS的静态库，否则会报链接错误；因而脚本中也没有加入自动更新代码的部分
+
+### windows
+- 编译方式：mingw64
+- 编译环境地址：192.168.0.141:E:\vooltdb_win_build\
+- 编译脚本地址：192.168.0.141:E:\vooltdb_win_build\build\build.bat
+- 取包地址：192.168.0.141:E:\vooltdb_win_build\build\package\vooltdb.exe
+
+# 

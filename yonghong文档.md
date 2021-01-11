@@ -236,6 +236,19 @@ void * Allocator<clear_memory_, mmap_populate>::realloc(void * buf, size_t old_s
 
 ``` 
 
+# 使用Vooltdb自带的TA测试vooltdb windows版本
+- 测试方法：linux 端运行测试脚本，向windows server发起请求
+- 测试集位置
+${vooltdb_project_root}/tests/queries/0_stateless
+- 测试命令
+ ```
+ cd ${vooltdb_project_root}; 
+ 
+ ./tests/clickhouse-test --timeout=3000 -j --no-zookeeper --no-shard --queries ./tests/queries --order=asc 
+ ```
+ 
+- --no-zookeeper --no-shard 为筛选掉zookeeper和shard case
+
 # Feature 9.2.1 Prestudy
 ### 在windows上自动识别时区
 - vooltdb使用cctz库来处理日期，cctz库使用时区文件(zoneinfo)来处理时区。在windows上，系统没有维护当前哪个时区文件正在使用的信息。这与linux不同

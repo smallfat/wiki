@@ -1,10 +1,9 @@
 ---
 title: 文档
-tags: 
 grammar_cjkRuby: true
 ---
 
-# 当前所有OS编译环境的情况
+# vooltdb当前所有OS编译环境的情况
 ### linux
 - 编译方式：直接编译
 - 编译环境地址：root@192.168.1.144:/home/vooltdb_package/linux
@@ -31,7 +30,7 @@ grammar_cjkRuby: true
 ### freebsd
 - 编译方式：freebsd虚拟机上进行编译，需要用下述目录处的虚拟机文件创建一个virtualbox freebsd虚拟机，然后在虚拟机内进行编译
 - 虚拟机文件地址：root@192.168.1.144:/home/vooltdb_package/freebsd/FreeBSD-12.0-RELEASE-amd64.vhd
-- freebsd虚拟机账户：root/passwd
+- freebsd虚拟机账户：/root/passwd
 - 编译环境地址：/root/vooltdb_build/build
 - 编译脚本地址：/root/vooltdb_build/build/build.sh
 - 取包地址：/root/vooltdb_build/build/programs/clickhouse
@@ -235,5 +234,94 @@ void * Allocator<clear_memory_, mmap_populate>::realloc(void * buf, size_t old_s
             void * new_buf = _aligned_realloc(buf, new_size, MALLOC_MIN_ALIGNMENT);
 ......
 
+``` 
+
+# Feature 9.2.1 Prestudy
+### 在windows上自动识别时区
+- vooltdb使用cctz库来处理日期，cctz库使用时区文件(zoneinfo)来处理时区。在windows上，系统没有维护当前哪个时区文件正在使用的信息。这与linux不同
+- 可以使用GetTimeZoneInformation API取得当前时区（如中国是8），再将此数字转换为“Asia/Shanghai”
+- 实验性代码已经commit到identify-timezone-auto branch
+
+### 当config.xml中interserver-http-port/interserver-https-port为-1时，不启用此端口
+可考虑在下述代码前判断当前config中interserver_http_port/interserver-https-port选项的值，若不为-1才执行。
+
 ```
+        /// Server.cpp
+		/// Interserver IO HTTP
+            create_server("interserver_http_port", [&](UInt16 port)
+            {
+                Poco::Net::ServerSocket socket;
+                auto address = socket_bind_listen(socket, listen_host, port);
+                socket.setReceiveTimeout(settings.http_receive_timeout);
+                socket.setSendTimeout(settings.http_send_timeout);
+                servers.emplace_back(std::make_unique<Poco::Net::HTTPServer>(
+                    createHandlerFactory(*this, async_metrics, "InterserverIOHTTPHandler-factory"), server_pool, socket, http_params));
+
+                LOG_INFO(log, "Listening for replica communication (interserver): http://" + address.toString());
+            });
+
+            create_server("interserver_https_port", [&](UInt16 port)
+            {
+#if USE_POCO_NETSSL
+                Poco::Net::SecureServerSocket socket;
+                auto address = socket_bind_listen(socket, listen_host, port, /* secure = */ true);
+                socket.setReceiveTimeout(settings.http_receive_timeout);
+                socket.setSendTimeout(settings.http_send_timeout);
+                servers.emplace_back(std::make_unique<Poco::Net::HTTPServer>(
+                    createHandlerFactory(*this, async_metrics, "InterserverIOHTTPSHandler-factory"), server_pool, socket, http_params));
+
+                LOG_INFO(log, "Listening for secure replica communication (interserver): https://" + address.toString());
+#else
+                UNUSED(port);
+                throw Exception{"SSL support for TCP protocol is disabled because Poco library was built without NetSSL support.",
+                        ErrorCodes::SUPPORT_IS_DISABLED};
+#endif
+            });
+```
+
+
+#  Feature - 支持1970年之前的日期
+- 原理：在DateTime lookup 表中，将时间窗口从1970年向左滑动至1900年，滑动距离为2208988800秒
+- 代码：
+ 
+  ```
+        //DateLUTImpl.cpp
+	
+	// feature 9.2: the date before 1970-01-01 should be supported - we move the time window left to 1900-01-01
+	
+    // by jasonliu
+    cctz::civil_day date{1900, 1, 1};
+
+    do
+    {
+        cctz::time_zone::civil_lookup lookup = cctz_time_zone.lookup(date);
+
+        start_of_day = std::chrono::system_clock::to_time_t(lookup.pre) + TIME_WINDOW_OFFSET;    /// Ambiguity is possible.
+
+        Values & values = lut[i];
+        values.year = date.year();
+        values.month = date.month();
+        values.day_of_month = date.day();
+        values.day_of_week = getDayOfWeek(date);
+        values.date = start_of_day;
+
+
+       // DataTypeDateTime.cpp
+  
+  void DataTypeDateTime::deserializeTextQuoted(IColumn & column, ReadBuffer & istr, const FormatSettings & settings) const {
+    time_t x;
+    if (checkChar('\'', istr)) /// Cases: '2017-08-31 18:36:48' or '1504193808'
+    {
+        ::readText(x, istr, settings, time_zone, utc_time_zone);
+        assertChar('\'', istr);
+    }
+    else /// Just 1504193808 or 01504193808
+    {
+        readIntText(x, istr);
+        x = DateLUTImpl::toTransformedTime(x);
+    }
+    assert_cast<ColumnType &>(column).getData().push_back(x);    /// It's important to do this at the end - for exception safety.}
+
+```
+
 
